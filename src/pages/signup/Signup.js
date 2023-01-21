@@ -28,7 +28,7 @@ export default function Signup() {
             setThumbnailError('Selected file must be an image')
             return
         }
-        if (selected.size > 100000) {
+        if (selected.size > 500000) {
             setThumbnailError('Image file size must be less than 100kb')
             return
         }
@@ -73,6 +73,7 @@ export default function Signup() {
                 <input
                     required
                     type="file"
+                    accept="image/*"
                     onChange={handleFileChange}
                 />
                 {thumbnailError && <div className="error">{thumbnailError}</div>}
