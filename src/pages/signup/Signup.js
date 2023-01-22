@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useSignup } from '../../hooks/useSignup'
 
 // styles
 import './Signup.css'
@@ -9,10 +10,11 @@ export default function Signup() {
     const [displayName, setDisplayName] = useState('')
     const [thumbnail, setThumbnail] = useState(null)
     const [thumbnailError, setThumbnailError] = useState(null)
+    const { signup, isPending, error } = useSignup()
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        console.log(email, password, displayName, thumbnail)
+        signup(email, password, displayName, thumbnail)
     }
 
     const handleFileChange = (e) => {
@@ -40,9 +42,9 @@ export default function Signup() {
 
     return (
         <form onSubmit={handleSubmit} className="auth-form">
-            <h2>sign up</h2>
+            <h2>Sign up</h2>
             <label>
-                <span>email:</span>
+                <span>Email:</span>
                 <input
                     required
                     type="email"
@@ -51,7 +53,7 @@ export default function Signup() {
                 />
             </label>
             <label>
-                <span>password:</span>
+                <span>Password:</span>
                 <input
                     required
                     type="password"
@@ -60,7 +62,7 @@ export default function Signup() {
                 />
             </label>
             <label>
-                <span>display name:</span>
+                <span>Display name:</span>
                 <input
                     required
                     type="text"
@@ -73,12 +75,14 @@ export default function Signup() {
                 <input
                     required
                     type="file"
-                    accept="image/*"
+                    format="image/*"
                     onChange={handleFileChange}
                 />
                 {thumbnailError && <div className="error">{thumbnailError}</div>}
             </label>
-            <button className="btn">Sign up</button>
+            {!isPending && <button className="btn">Sign up</button>}
+            {isPending && <button className="btn" disabled>loading</button>}
+            {error && <div className="error">{error}</div>}
         </form>
     )
 }
