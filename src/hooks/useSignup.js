@@ -11,7 +11,7 @@ export const useSignup = () => {
   const signup = async (email, password, displayName, thumbnail) => {
     setError(null)
     setIsPending(true)
-
+  
     try {
       // signup
       const res = await projectAuth.createUserWithEmailAndPassword(email, password)
@@ -29,7 +29,7 @@ export const useSignup = () => {
       await res.user.updateProfile({ displayName, photoURL: imgUrl })
 
       // create a user document
-      await projectFirestore.collection('users').doc(res.user.uid).set({
+      await projectFirestore.collection('users').doc(res.user.uid).set({ 
         online: true,
         displayName,
         photoURL: imgUrl,
@@ -42,8 +42,8 @@ export const useSignup = () => {
         setIsPending(false)
         setError(null)
       }
-    }
-    catch (err) {
+    } 
+    catch(err) {
       if (!isCancelled) {
         setError(err.message)
         setIsPending(false)

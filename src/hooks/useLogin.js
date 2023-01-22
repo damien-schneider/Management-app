@@ -11,7 +11,7 @@ export const useLogin = () => {
   const login = async (email, password) => {
     setError(null)
     setIsPending(true)
-
+  
     try {
       // login
       const res = await projectAuth.signInWithEmailAndPassword(email, password)
@@ -27,8 +27,8 @@ export const useLogin = () => {
         setIsPending(false)
         setError(null)
       }
-    }
-    catch (err) {
+    } 
+    catch(err) {
       if (!isCancelled) {
         setError(err.message)
         setIsPending(false)
